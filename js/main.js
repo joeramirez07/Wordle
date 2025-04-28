@@ -1,5 +1,6 @@
  /*----- constants -----*/
-
+const maxGuesses = 6;
+const wordLength = 5;
 
   /*----- state variables -----*/
 let secretWord = '';
@@ -28,7 +29,16 @@ function init() {
     buildBoard();
   }
   
-  function pickSecretWord()[
-    const randomIndex = Math.floor(Math.random) *  
+  function render () {
 
-  ]
+  }
+
+  function buildBoard() {
+    
+  }
+  
+  
+ // function pickSecretWord()[
+   // const randomIndex = Math.floor(Math.random) *  
+
+  init ();
