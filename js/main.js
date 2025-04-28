@@ -14,6 +14,8 @@ let gameOver = false;
 
   /*----- event listeners -----*/
 
+keyboardEl.addEventListener('click', keyboardClick);
+
 
   /*----- functions -----*/
 // Initialize the game
@@ -49,10 +51,6 @@ function init() {
 
   }
 
-  function sumbitGuess() {
-
-    
-  }
  // function pickSecretWord()[
    // const randomIndex = Math.floor(Math.random) *  
 
