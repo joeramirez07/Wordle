@@ -1,78 +1,34 @@
 
-"with the help of google"
+"with help of google"
 
+1. Start the Game
+- Pick a random secret word from the list.
+- Reset guesses, current row, and game status to starting values.
+- Build the empty board of tiles.
 
-Init
-- Randomly select a secretWord from the WORDS array.
-- Convert secretWord into an array of characters using .split('') and store as a new state variable secretWordArr.
-- Set currentGuess to an empty string.
-- Set guesses array to empty.
-- Set currentRow to 0.
-- Set gameOver to false.
-- Build an empty game board (30 tiles: 6 rows × 5 tiles).
-- Call render() to update the initial empty board.
+2. When Player Clicks a Button
+- If they click a letter, add it to the current guess (up to 5 letters).
+- If they click DELETE, remove the last letter typed.
+- If they click ENTER, try to submit the guess.
 
-Handling Keyboard Button Clicks (handleKeyboardClick)
-- If the game is over, ignore all input.
-- Get the clicked button's textContent (the letter).
-- If the letter is:
-  - A single letter (A-Z):
-    - Call addLetter(letter).
-  - The word "DELETE":
-    - Call deleteLetter().
-  - The word "ENTER":
-    - Call submitGuess().
-- After any input, call render() to update the screen.
+3. Submitting a Guess
+- Only allow submitting if the guess has exactly 5 letters.
+- If the guess matches the secret word, the player wins.
+- If it's wrong but guesses remain, move to the next row.
+- If no guesses are left, the player loses.
 
-Typing Letters (addLetter)
-- If currentGuess length is less than 5:
-  - Append the chosen letter to currentGuess.
-- If currentGuess is already 5 letters, ignore additional typing.
-- Always call render() after updating currentGuess.
+4. Typing Letters
+- Allow typing up to 5 letters only.
+- Update the tiles each time a letter is typed or deleted.
 
-Deleting Letters (deleteLetter)
-- Remove the last letter from currentGuess (slice off the last character).
-- Always call render() after updating currentGuess.
+5. Rendering the Board
+- Show all submitted guesses in the tiles.
+- Color the tiles green, yellow, or gray based on the guess.
+- Show the current guess being typed (without colors yet).
+ 6. Helper Tools
+- Use split() to break words into arrays for easy checking.
+- Always call render() after changing any game state.
 
-Submitting a Guess (submitGuess)
-- Only allow submission if currentGuess is exactly 5 letters.
-- Add currentGuess to the guesses array.
-- Compare currentGuess to secretWord:
-  - If they match:
-    - Set gameOver to true.
-    - Display "You Win!" message.
-  - Else:
-    - If this was the 6th guess (MAX_GUESSES):
-      - Set gameOver to true.
-      - Display "You Lose!" message and reveal secretWord.
-    - Otherwise:
-      - Increment currentRow by 1.
-      - Clear currentGuess to empty.
-- Always call render() after submitting a guess.
-
-Rendering the Board (render)
-- Clear the board container visually.
-- For each guess already made:
-  - Loop through each letter:
-    - Fill each tile with the letter.
-    - Apply a color:
-      - Green if the letter is correct and in the correct position.
-      - Yellow if the letter is correct but wrong position.
-      - Gray if the letter is not in the word.
-- For the current typing guess:
-  - Show typed letters in tiles (no colors yet).
-
-Helper Details
-- Use .split('') to break words into arrays for easier letter checking.
-- Use .join('') if you need to rebuild words from arrays.
-- Always call render() after any state change.
-
-Summary Timeline
-1. Write initialize()
-2. Call initialize() when page loads
-3. Write empty render() function
-4. Always call render() after changes to state
-5. Register keyboard event listeners using event delegation
-6. Write logic for typing, deleting, submitting guesses
-
+ Important Rule
+- Always update (render) the board after typing, deleting, or submitting a guess!
 

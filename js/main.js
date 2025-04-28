@@ -34,10 +34,25 @@ function init() {
   }
 
   function buildBoard() {
-    
+
   }
   
+  function addletter() {
+
+  }
   
+  function keyboardClick() {
+
+  }
+
+  function deleteLetter() {
+
+  }
+
+  function sumbitGuess() {
+
+    
+  }
  // function pickSecretWord()[
    // const randomIndex = Math.floor(Math.random) *  
 
