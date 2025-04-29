@@ -15,7 +15,8 @@ const keyboardEl = document.getElementById('keyboard');
 const messageEl = document.querySelector('h1');
 
 /*----- event listeners -----*/
-keyboardEl.addEventListener('click', handleKeyClick);
+keyboardEl.addEventListener('click', keyboardClick);
+
 
 /*----- functions -----*/
 
@@ -28,95 +29,104 @@ function init() {
   currentRow = 0;
   gameOver = false;
   messageEl.textContent = '';
-  render(); // this will call renderBoard(), which builds and shows the board
+  render(); 
 }
 
-function handleKeyClick(evt) {
-  if (gameOver) return;
-
-  const clicked = evt.target;
-  if (clicked.tagName !== 'BUTTON') return;
-
-  const letter = clicked.textContent;
-
-  if (letter === 'ENTER') {
-    submitGuess();
-  } else if (letter === 'DELETE') {
-    deleteLetter();
-  } else if (/^[A-Z]$/.test(letter)) {
-    addLetter(letter);
+function keyboardClick(evt) {
+    if (gameOver) return;
+  
+    const button = evt.target;
+    if (button.tagName !== 'BUTTON') return;
+  
+    const key = button.textContent;
+  
+    if (key === 'ENTER') {
+      submitGuess();
+    } else if (key === 'DELETE') {
+      deleteLetter();
+    } else {
+      addLetter(key);
+    }
+  
+    render();
   }
-
-  render();
-}
-
+  
+  
 function addLetter(letter) {
+
   if (currentGuess.length < wordLength) {
     currentGuess.push(letter);
   }
 }
-
 function deleteLetter() {
   currentGuess.pop();
 }
 
 function submitGuess() {
-  if (currentGuess.length !== wordLength) return;
-
-  const guessWord = currentGuess.join('');
-  guesses.push([...currentGuess]);
-
-  if (guessWord === secretWord) {
-    messageEl.textContent = 'You Win!';
-    gameOver = true;
-  } else if (guesses.length === maxGuesses) {
-    messageEl.textContent = `You Lose! The word was ${secretWord}`;
-    gameOver = true;
+    // Don't submit unless 5 letters have been typed
+    if (currentGuess.length < wordLength) return;
+  
+    // Turn the letter array into one string 
+    const guessWord = currentGuess.join('');
+  
+    // Save this guess to the list of guesses
+    guesses.push([...currentGuess]);
+  
+    // Check for a win
+    if (guessWord === secretWord) {
+      messageEl.textContent = 'You Win!';
+      gameOver = true;
+    }
+  
+    // Check for a loss (no more guesses)
+    if (guesses.length === maxGuesses && guessWord !== secretWord) {
+      messageEl.textContent = `You Lose! The word was ${secretWord}`;
+      gameOver = true;
+    }
+  
+    // Clear the current guess and move to the next row
+    currentGuess = [];
+    currentRow++;
   }
-
-  currentGuess = [];
-  currentRow++;
-}
+  
 
 function render() {
   renderBoard();
 }
 
 function renderBoard() {
-  let html = '';
-
-  // 1. Render all submitted guesses
-  guesses.forEach((guessArr, rowIdx) => {
-    guessArr.forEach((letter, colIdx) => {
-      let bgColor = 'lightgray';
-      if (letter === secretWord[colIdx]) {
-        bgColor = 'green';
-      } else if (secretWord.includes(letter)) {
-        bgColor = 'goldenrod';
-      }
-
-      html += `<div class="tile" style="background-color:${bgColor};">${letter}</div>`;
+    let html = '';
+  
+    guesses.forEach((guessArr, rowIdx) => {
+      guessArr.forEach((letter, colIdx) => {
+        let tileColor = 'lightgray';
+  
+        if (letter === secretWord[colIdx]) {
+            tileColor = 'green';
+  
+        } else if (secretWord.includes(letter)) {
+            tileColor = 'gold';
+        }
+  
+        html += `<div class="tile" style="background-color:${tileColor};">${letter}</div>`;
+      });
     });
-  });
 
-  // 2. Render current typing row
-  for (let i = 0; i < wordLength; i++) {
-    const letter = currentGuess[i] || '';
-    html += `<div class="tile">${letter}</div>`;
+    for (let i = 0; i < wordLength; i++) {
+      const letter = currentGuess[i] || ''; // blank if not typed yet
+      html += `<div class="tile">${letter}</div>`;
+    }
+  
+    // 3. Fill in the rest of the board with empty tiles
+    const totalTiles = maxGuesses * wordLength;
+    const filledTiles = guesses.length * wordLength + wordLength;
+    const remainingTiles = totalTiles - filledTiles;
+  
+    for (let i = 0; i < remainingTiles; i++) {
+      html += `<div class="tile"></div>`;
+    }
+  
+    // 4. Apply all tiles to the board at once
+    boardEl.innerHTML = html;
   }
-
-  // 3. Fill the rest of the board with empty tiles
-  const totalTiles = maxGuesses * wordLength;
-  const filledTiles = guesses.length * wordLength + wordLength;
-  const remainingTiles = totalTiles - filledTiles;
-
-  for (let i = 0; i < remainingTiles; i++) {
-    html += `<div class="tile"></div>`;
-  }
-
-  // 4. Apply all the HTML to the board
-  boardEl.innerHTML = html;
-}
-
-
-
+  
