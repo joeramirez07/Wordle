@@ -1,0 +1,18 @@
+#board {
+    display: grid;
+    grid-template-columns: repeat(5, 2rem); /* ✅ fixed property */
+    gap: 0.5rem; /* ✅ optional, adds nice space between tiles */
+  }
+  
+  #board > div {
+    font-size: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black; /* ✅ real border */
+    color: black; /* ✅ real text color */
+    text-transform: uppercase; /* ✅ optional, makes letters uppercase */
+  }
+  

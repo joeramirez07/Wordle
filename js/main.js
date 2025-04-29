@@ -1,57 +1,63 @@
- /*----- constants -----*/
+/*----- constants -----*/
 const maxGuesses = 6;
 const wordLength = 5;
 
-  /*----- state variables -----*/
+/*----- state variables -----*/
 let secretWord = '';
 let currentGuess = '';
 let currentRow = 0;
 let gameOver = false;
 
+/*----- cached elements  -----*/
+const boardEl = document.getElementById('board');
+const keyboardEl = document.getElementById('keyboard');
 
-  /*----- cached elements  -----*/
-
-
-  /*----- event listeners -----*/
-
+/*----- event listeners -----*/
 keyboardEl.addEventListener('click', keyboardClick);
 
+/*----- functions -----*/
 
-  /*----- functions -----*/
-// Initialize the game
-//Declare, but don't initialize, the application-wide state variables. 
-// The initialization of the variables to their "initial" state should be done within an initialize, 
-// //or similarly named function, e.g., init.
+function buildBoard() {
+  boardEl.innerHTML = '';
+  for (let i = 0; i < maxGuesses * wordLength; i++) {
+    const tile = document.createElement('div');
+    tile.classList.add('tile');
+    tile.setAttribute('id', `tile-${i}`);
+    boardEl.appendChild(tile);
+  }
+}
+
+// Initialize the game 
 function init() {
-    secretWord = WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
-    currentGuess = '';
-    currentRow = 0;
-    gameOver = false;
+  secretWord = WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
+  currentGuess = '';
+  currentRow = 0;
+  gameOver = false;
   
-    buildBoard();
-  }
+  // Build the board when game starts
+  buildBoard(); 
+}
+
+// Update the board visually
+function render() {
+ 
+}
+
+// Handle keyboard button clicks
+function keyboardClick(event) {
   
-  function render () {
+}
 
-  }
-
-  function buildBoard() {
-
-  }
+// Add a letter to the current guess
+function addLetter() {
   
-  function addletter() {
+}
 
-  }
+// Delete the last letter
+function deleteLetter() {
   
-  function keyboardClick() {
+}
 
-  }
+// Call init to start the game
+init();
 
-  function deleteLetter() {
-
-  }
-
- // function pickSecretWord()[
-   // const randomIndex = Math.floor(Math.random) *  
-
-  init ();
