@@ -3,61 +3,120 @@ const maxGuesses = 6;
 const wordLength = 5;
 
 /*----- state variables -----*/
-let secretWord = '';
-let currentGuess = '';
-let currentRow = 0;
-let gameOver = false;
+let secretWord;
+let guesses; // array of guesses → each guess is an array of letters
+let currentGuess; // array of letters currently being typed
+let currentRow;
+let gameOver;
 
-/*----- cached elements  -----*/
+/*----- cached elements -----*/
 const boardEl = document.getElementById('board');
 const keyboardEl = document.getElementById('keyboard');
+const messageEl = document.querySelector('h1');
 
 /*----- event listeners -----*/
-keyboardEl.addEventListener('click', keyboardClick);
+keyboardEl.addEventListener('click', handleKeyClick);
 
 /*----- functions -----*/
 
-function buildBoard() {
-  boardEl.innerHTML = '';
-  for (let i = 0; i < maxGuesses * wordLength; i++) {
-    const tile = document.createElement('div');
-    tile.classList.add('tile');
-    tile.setAttribute('id', `tile-${i}`);
-    boardEl.appendChild(tile);
+init();
+
+function init() {
+  secretWord = WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
+  guesses = [];
+  currentGuess = [];
+  currentRow = 0;
+  gameOver = false;
+  messageEl.textContent = '';
+  render(); // this will call renderBoard(), which builds and shows the board
+}
+
+function handleKeyClick(evt) {
+  if (gameOver) return;
+
+  const clicked = evt.target;
+  if (clicked.tagName !== 'BUTTON') return;
+
+  const letter = clicked.textContent;
+
+  if (letter === 'ENTER') {
+    submitGuess();
+  } else if (letter === 'DELETE') {
+    deleteLetter();
+  } else if (/^[A-Z]$/.test(letter)) {
+    addLetter(letter);
+  }
+
+  render();
+}
+
+function addLetter(letter) {
+  if (currentGuess.length < wordLength) {
+    currentGuess.push(letter);
   }
 }
 
-// Initialize the game 
-function init() {
-  secretWord = WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
-  currentGuess = '';
-  currentRow = 0;
-  gameOver = false;
-  
-  // Build the board when game starts
-  buildBoard(); 
-}
-
-// Update the board visually
-function render() {
- 
-}
-
-// Handle keyboard button clicks
-function keyboardClick(event) {
-  
-}
-
-// Add a letter to the current guess
-function addLetter() {
-  
-}
-
-// Delete the last letter
 function deleteLetter() {
-  
+  currentGuess.pop();
 }
 
-// Call init to start the game
-init();
+function submitGuess() {
+  if (currentGuess.length !== wordLength) return;
+
+  const guessWord = currentGuess.join('');
+  guesses.push([...currentGuess]);
+
+  if (guessWord === secretWord) {
+    messageEl.textContent = 'You Win!';
+    gameOver = true;
+  } else if (guesses.length === maxGuesses) {
+    messageEl.textContent = `You Lose! The word was ${secretWord}`;
+    gameOver = true;
+  }
+
+  currentGuess = [];
+  currentRow++;
+}
+
+function render() {
+  renderBoard();
+}
+
+function renderBoard() {
+  let html = '';
+
+  // 1. Render all submitted guesses
+  guesses.forEach((guessArr, rowIdx) => {
+    guessArr.forEach((letter, colIdx) => {
+      let bgColor = 'lightgray';
+      if (letter === secretWord[colIdx]) {
+        bgColor = 'green';
+      } else if (secretWord.includes(letter)) {
+        bgColor = 'goldenrod';
+      }
+
+      html += `<div class="tile" style="background-color:${bgColor};">${letter}</div>`;
+    });
+  });
+
+  // 2. Render current typing row
+  for (let i = 0; i < wordLength; i++) {
+    const letter = currentGuess[i] || '';
+    html += `<div class="tile">${letter}</div>`;
+  }
+
+  // 3. Fill the rest of the board with empty tiles
+  const totalTiles = maxGuesses * wordLength;
+  const filledTiles = guesses.length * wordLength + wordLength;
+  const remainingTiles = totalTiles - filledTiles;
+
+  for (let i = 0; i < remainingTiles; i++) {
+    html += `<div class="tile"></div>`;
+  }
+
+  // 4. Apply all the HTML to the board
+  boardEl.innerHTML = html;
+}
+
+
 
