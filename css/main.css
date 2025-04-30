@@ -86,3 +86,6 @@ h1 {
 #keyboard button:hover {
   background-color: #ccc;
 }
+#keyboard button.wide {
+  width: 5.5rem;
+}
