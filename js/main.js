@@ -13,9 +13,12 @@ let gameOver;
 const boardEl = document.getElementById('board');
 const keyboardEl = document.getElementById('keyboard');
 const messageEl = document.querySelector('h1');
+const playAgainBtn = document.getElementById('play-again');
+
 
 /*----- event listeners -----*/
 keyboardEl.addEventListener('click', keyboardClick);
+playAgainBtn.addEventListener('click', init);
 
 
 /*----- functions -----*/
@@ -29,6 +32,7 @@ function init() {
   currentRow = 0;
   gameOver = false;
   messageEl.textContent = '';
+  playAgainBtn.style.display = 'none';
   render(); 
 }
 
@@ -65,28 +69,34 @@ function deleteLetter() {
 function submitGuess() {
     // Don't submit unless 5 letters have been typed
     if (currentGuess.length < wordLength) return;
-  
     // Turn the letter array into one string 
     const guessWord = currentGuess.join('');
-  
     // Save this guess to the list of guesses
     guesses.push([...currentGuess]);
-  
     // Check for a win
     if (guessWord === secretWord) {
       messageEl.textContent = 'You Win!';
       gameOver = true;
     }
-  
     // Check for a loss (no more guesses)
     if (guesses.length === maxGuesses && guessWord !== secretWord) {
       messageEl.textContent = `You Lose! The word was ${secretWord}`;
       gameOver = true;
     }
-  
-    // Clear the current guess and move to the next row
+     // Clear the current guess and move to the next row
     currentGuess = [];
     currentRow++;
+    
+    if (guessWord === secretWord) {
+      messageEl.textContent = 'You Win!';
+      gameOver = true;
+      playAgainBtn.style.display = 'inline-block';
+    } else if (guesses.length === maxGuesses && guessWord !== secretWord) {
+      messageEl.textContent = `You Lose! The word was ${secretWord}`;
+      gameOver = true;
+      playAgainBtn.style.display = 'inline-block';
+    }
+    
   }
   
 
