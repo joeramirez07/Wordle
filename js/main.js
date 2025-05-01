@@ -73,17 +73,7 @@ function submitGuess() {
     const guessWord = currentGuess.join('');
     // Save this guess to the list of guesses
     guesses.push([...currentGuess]);
-    // Check for a win
-    if (guessWord === secretWord) {
-      messageEl.textContent = 'You Win!';
-      gameOver = true;
-    }
-    // Check for a loss (no more guesses)
-    if (guesses.length === maxGuesses && guessWord !== secretWord) {
-      messageEl.textContent = `You Lose! The word was ${secretWord}`;
-      gameOver = true;
-    }
-     // Clear the current guess and move to the next row
+
     currentGuess = [];
     currentRow++;
     
@@ -106,18 +96,17 @@ function render() {
 
 function renderBoard() {
     let html = '';
-  
+    
     guesses.forEach((guessArr, rowIdx) => {
+      const copySecret = [...secretWord];
       guessArr.forEach((letter, colIdx) => {
         let tileColor = 'lightgray';
-  
-        if (letter === secretWord[colIdx]) {
-            tileColor = 'green';
-  
-        } else if (secretWord.includes(letter)) {
-            tileColor = 'gold';
+        if (letter === copySecret[colIdx]) {
+          tileColor = 'green';
+          copySecret[colIdx] = null;
+        } else if (copySecret.includes(letter)) {
+          tileColor = 'gold';
         }
-  
         html += `<div class="tile" style="background-color:${tileColor};">${letter}</div>`;
       });
     });
