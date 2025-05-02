@@ -16,9 +16,7 @@ Can you guess the word before you run out of tries?
 
 Wordle is a browser-based word puzzle game that challenges your vocabulary and logic.
 
-# Screenshot
 
-# Screenshot
 
 <img src="https://i.imgur.com/TZsNVfV.png" alt="Wordle screenshot">
 <img src="https://imgur.com/4h36QJJ.png" alt="Wordle screenshot">
