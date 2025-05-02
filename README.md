@@ -14,7 +14,7 @@ Guess the 5-letter secret word in 6 tries.
 Can you guess the word before you run out of tries?
 
 
- Background info of the game is a nice touch.
+Wordle is a browser-based word puzzle game that challenges your vocabulary and logic.
 
 # Screenshot
 
