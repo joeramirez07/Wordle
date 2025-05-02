@@ -2,7 +2,7 @@
 
 
 
-# <WORDLE
+# WORDLE
 
 Guess the 5-letter secret word in 6 tries.
  After each guess, the color of the tiles will change to show how close your guess was:
