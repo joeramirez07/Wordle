@@ -38,5 +38,7 @@ https://joeramirez07.github.io/Wordle/
 
 # Next Steps
 
-- Future enhancement one...
-- Future enhancement two... 
+- Change keyboard layout to QWERTY format 
+- Add color feedback to keyboard buttons
+- When a letter is picked, change its color so the user knows it was already guessed
+- Add sound effects for each guess or tile reveal
