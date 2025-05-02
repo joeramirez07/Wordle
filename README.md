@@ -21,8 +21,9 @@ Can you guess the word before you run out of tries?
 # Screenshot
 
 <img src="https://i.imgur.com/TZsNVfV.png" alt="Wordle screenshot">
+<img src="https://imgur.com/4h36QJJ.png" alt="Wordle screenshot">
 
-<img src="url to your image on imgur" alt="acreenshot">
+
 
 # Technologies Used
 
@@ -33,8 +34,7 @@ Can you guess the word before you run out of tries?
 
 # Getting Started
 
-[Click to View Project Planning](your Trello url here)
-[Click to Play Connect Four!](your deployment url here)
+https://joeramirez07.github.io/Wordle/
 
 # Next Steps
 
